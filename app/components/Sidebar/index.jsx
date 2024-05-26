@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Box,
@@ -6,7 +6,6 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  Toolbar,
   Typography,
   Divider,
 } from "@mui/material";
@@ -16,14 +15,15 @@ import {
   Drafts,
   Report,
   Delete,
-  PaddingTwoTone,
+  ModeEditOutline,
 } from "@mui/icons-material";
 import GoogleImage from "../../../assets/google.png";
 import Image from "next/image";
+import SendEmailModal from "../SendEmail";
+import { SideBarStyles } from "./index.styles";
 
 const Sidebar = () => {
-  const drawerWidth = 200;
-
+  const [showNewEmailModal, setShowNewEmailModal] = useState(false);
   const navItems = [
     { text: "Inbox", icon: <Inbox /> },
     { text: "Sent", icon: <Send /> },
@@ -31,57 +31,64 @@ const Sidebar = () => {
     { text: "Spam", icon: <Report /> },
     { text: "Trash", icon: <Delete /> },
   ];
+
+  const {
+    drawerPaper,
+    addButton,
+    addButtonText,
+    composeButton,
+    composeButtonText,
+    composeIcon,
+    navItemText,
+  } = SideBarStyles;
+
   return (
-    <Drawer
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          background: "#f6f8fc",
-        },
-      }}
-      variant="permanent"
-      anchor="left"
-    >
-      {/* <Toolbar> */}
-      <Box sx={{ padding: "1rem 0 1rem 0.5rem" }}>
-        <Button
-          sx={{
-            background: "#c2e7fe",
-            border: "none",
-            padding: "0.75rem",
-            borderRadius: "1rem",
-            display: "flex",
-            columnGap: "0.5rem",
-            width: "11rem",
-            transition: "0.3s ease-in-out",
-            display:'flex',
-            alignItems:'center',
-            "&:hover": {
-              background: "#c2e7fe",
-              transform: "scale(1.025)",
-            },
-          }}
-        >
-          <Image src={GoogleImage} height={22} width={22} alt="google image" />
-          <Typography sx={{ color: "#001d35" }}>Add Google</Typography>
-        </Button>
-      </Box>
-      <Divider/>
-      <List>
-        {navItems.map((item, index) => (
-          <ListItem button key={index}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <Typography
-              children={item.text}
-              sx={{ fontSize: "1.1rem", fontWeight: 600, color: "#001d35" }}
+    <>
+      <Drawer
+        sx={{
+          flexShrink: 0,
+          "& .MuiDrawer-paper": drawerPaper,
+        }}
+        variant="permanent"
+        anchor="left"
+      >
+        <Box sx={{ padding: "1rem 0 1rem 0.5rem" }}>
+          <Button sx={addButton}>
+            <Image
+              src={GoogleImage}
+              height={22}
+              width={22}
+              alt="google image"
             />
-          </ListItem>
-        ))}
-      </List>
-    </Drawer>
+            <Typography sx={addButtonText}>Add Google</Typography>
+          </Button>
+        </Box>
+        <Divider />
+        <Box sx={{ padding: "1rem 0 0 0.5rem" }}>
+          <Button
+            sx={composeButton}
+            onClick={() => {
+              setShowNewEmailModal(true);
+            }}
+          >
+            <ModeEditOutline sx={composeIcon} />
+            <Typography sx={composeButtonText}>Compose</Typography>
+          </Button>
+        </Box>
+        <List>
+          {navItems.map((item, index) => (
+            <ListItem button key={index}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <Typography sx={navItemText}>{item.text}</Typography>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <SendEmailModal
+        open={showNewEmailModal}
+        handleClose={() => setShowNewEmailModal(false)}
+      />
+    </>
   );
 };
 
