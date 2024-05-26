@@ -14,8 +14,6 @@ const EmailDetailView = ({ email }) => {
       to: email.from.emailAddress.address,
       cc: email.ccRecipients[0].emailAddress.address,
     };
-    console.log("email", email);
-    console.log("emailInfo", emailInfo);
     setReplyModalData(emailInfo);
   };
   return (
