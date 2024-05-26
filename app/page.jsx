@@ -14,7 +14,7 @@ export default function Home() {
             Gmail
           </button>
           <button
-            onClick={() => router.push("/outlook")}
+            onClick={() => router.push("http://localhost:3000/login")}
             className="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-300"
           >
             Outlook
