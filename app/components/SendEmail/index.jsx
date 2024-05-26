@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Box, Button, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { SendEmailStyles } from "./index.styles"; // Import the styles
 
-const SendEmailModal = ({ open, handleClose }) => {
-  const [emailData, setEmailData] = useState({
+const SendEmailModal = ({ open, handleClose, emailInfo }) => {
+  const dummyEmailData = {
     to: "",
     cc: "",
     bcc: "",
     subject: "",
     body: "",
-  });
+  };
+  const [emailData, setEmailData] = useState(emailInfo || dummyEmailData);
   const [ccEnabled, setCcEnabled] = useState(false);
   const [bccEnabled, setBccEnabled] = useState(false);
 

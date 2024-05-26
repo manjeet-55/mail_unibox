@@ -10,7 +10,7 @@ const EmailsPageLayout = ({ children }) => {
     <Provider store={store}>
       <Box sx={{ display: "flex" }}>
         <Sidebar />
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, marginLeft: "200px" }}>
           <Main children={children}></Main>
         </Box>
       </Box>

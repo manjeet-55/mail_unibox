@@ -43,7 +43,7 @@ export const sampleEmail = {
       from: {
         emailAddress: {
           name: "Vasu Bajaj",
-          address: "vasu.bajaj@fiftyfivetech.io",
+          address: "manjeet@fiftyfivetech.io",
         },
       },
       toRecipients: [
@@ -58,7 +58,7 @@ export const sampleEmail = {
         {
           emailAddress: {
             name: "Vasu Bajaj",
-            address: "vasu.bajaj@fiftyfivetech.io",
+            address: "manjeet@fiftyfivetech.io",
           },
         },
       ],
@@ -170,7 +170,7 @@ export const sampleEmail = {
       from: {
         emailAddress: {
           name: "Vasu Bajaj",
-          address: "vasu.bajaj@fiftyfivetech.io",
+          address: "manjeet.agarwal@fiftyfivetech.io",
         },
       },
       toRecipients: [
@@ -185,7 +185,7 @@ export const sampleEmail = {
         {
           emailAddress: {
             name: "Vasu Bajaj",
-            address: "vasu.bajaj@fiftyfivetech.io",
+            address: "prakhar.saxena@fiftyfivetech.io",
           },
         },
       ],

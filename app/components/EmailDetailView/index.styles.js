@@ -1,10 +1,12 @@
 export const EmailDetailViewStyles = {
+  mainContainer: {},
   container: {
-    
+    flexGrow: 1,
     padding: "1rem",
     backgroundColor: "#ffffff",
     borderRadius: "8px",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    overflowY: "auto",
   },
   header: {
     borderBottom: "1px solid #e0e0e0",
@@ -28,6 +30,7 @@ export const EmailDetailViewStyles = {
     fontSize: "1.2rem",
     fontWeight: 600,
     marginBottom: "1rem",
+    marginLeft:'2.4rem'
   },
   body: {
     lineHeight: 1.6,
