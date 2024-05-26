@@ -84,10 +84,12 @@ const Sidebar = () => {
           ))}
         </List>
       </Drawer>
-      <SendEmailModal
-        open={showNewEmailModal}
-        handleClose={() => setShowNewEmailModal(false)}
-      />
+      {showNewEmailModal && (
+        <SendEmailModal
+          open={showNewEmailModal}
+          handleClose={() => setShowNewEmailModal(false)}
+  x      />
+      )}
     </>
   );
 };
