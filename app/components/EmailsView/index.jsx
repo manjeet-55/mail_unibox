@@ -16,16 +16,14 @@ import {
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
-import { htmlToText } from "html-to-text";
 const Emails = () => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [messages, setMessages] = useState([]);
-  const [selectedMessage, setSelectedMessage] = useState(null);
-  const [error, setError] = useState(null);
 
+  console.log("session", session);
   useEffect(() => {
     if (session && session.accessToken) {
       const fetchMessages = async () => {
@@ -92,7 +90,6 @@ const Emails = () => {
           dispatch(setGoogleEmails(messagesData));
           setMessages(messagesData);
         } catch (error) {
-          setError(error);
         }
       };
 

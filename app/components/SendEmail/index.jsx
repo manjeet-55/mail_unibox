@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Box, Button, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { SendEmailStyles } from "./index.styles"; // Import the styles
-
+import axios from "axios";
 const SendEmailModal = ({ open, handleClose, emailInfo }) => {
   const dummyEmailData = {
     to: "",
@@ -22,10 +22,59 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
       [name]: value,
     }));
   };
+  const handleOutlookEmailSend = async () => {
+    const dataToBeSent = {
+      mail: {
+        message: {
+          subject: emailData.subject,
+          body: {
+            contentType: "Text",
+            content: emailData.body,
+          },
+          toRecipients: [
+            {
+              emailAddress: {
+                address: emailData.to,
+              },
+            },
+          ],
+          ...(emailData.cc && {
+            ccRecipients: [
+              {
+                emailAddress: {
+                  address: emailData.cc,
+                },
+              },
+            ],
+          }),
+          ...(emailData.bcc && {
+            bccRecipients: [
+              {
+                emailAddress: {
+                  address: emailData.bcc,
+                },
+              },
+            ],
+          }),
+        },
+        saveToSentItems: true,
+      },
+    };
+    const accessToken = localStorage.getItem("access_token");
+    // console.log("data going", dataToBeSent, "accessToken", accessToken);
 
-  const handleSend = () => {
-    console.log("Email sent:", emailData);
-    handleClose();
+    const apiUrl = `http://localhost:3000/sendMail?access_token=${accessToken}`;
+    try {
+      const response = await axios.post(apiUrl, dataToBeSent, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log("Email sent successfully:", response.data);
+      // handleClose();
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
   };
 
   const {
@@ -129,7 +178,11 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
           <Button onClick={handleClose} sx={{ mr: 2 }}>
             Cancel
           </Button>
-          <Button variant="contained" color="primary" onClick={handleSend}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleOutlookEmailSend}
+          >
             Send
           </Button>
         </Box>

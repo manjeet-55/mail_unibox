@@ -108,7 +108,6 @@ const Sidebar = () => {
         <SendEmailModal
           open={showNewEmailModal}
           handleClose={() => setShowNewEmailModal(false)}
-          x
         />
       )}
     </>

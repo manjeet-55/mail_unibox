@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-// import { sampleEmail } from "../components/EmailsView/sampleData";
 import axios from "axios";
+import { setOutlookEmails } from "../store/Features/emailsDataSlice";
 const Main = ({ children }) => {
   // const [emails, setEmails] = useState(null);
 
@@ -24,7 +24,7 @@ const Main = ({ children }) => {
       axios
         .get(`http://localhost:3000/inbox?access_token=${storedKey}`)
         .then((response) => {
-          dispatch(setEmails(response.data));
+          dispatch(setOutlookEmails(response.data));
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
