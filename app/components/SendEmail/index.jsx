@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Box, Button, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { SendEmailStyles } from "./index.styles"; // Import the styles
@@ -87,7 +87,6 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
           "Content-Type": "application/json",
         },
       });
-      // console.log("Email sent successfully:", response.data);
       toast.success("Email Sent Successfully");
       // handleClose();
     } catch (error) {
@@ -95,7 +94,6 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
     }
   };
 
-  // console.log("fromEmail", fromEmail);
   const {
     modal,
     box,
