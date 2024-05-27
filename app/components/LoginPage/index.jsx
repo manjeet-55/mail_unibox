@@ -7,7 +7,7 @@ import MicrosoftLogo from "../../../assets/microsoft.svg";
  
 export default function LoginPage() {
     const handleSignIn = (provider) => () => {
-      console.log('provider', provider);
+
       signIn(provider);
     };
     return (

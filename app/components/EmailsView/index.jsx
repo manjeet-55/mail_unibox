@@ -23,9 +23,9 @@ const Emails = () => {
   const { data: session } = useSession();
   const [messages, setMessages] = useState([]);
 
-  console.log("session", session);
   useEffect(() => {
     if (session && session.accessToken) {
+      localStorage.setItem("gmail", session.user.email);
       const fetchMessages = async () => {
         let config = {
           method: "get",
@@ -47,19 +47,49 @@ const Emails = () => {
               let body = {
                 content: "",
               };
-              parts.forEach((part) => {
-                if (part.body.data) {
-                  // Decode the Base64 encoded data (handling URL-safe characters)
-                  const decodedData = atob(
-                    part.body.data.replace(/-/g, "+").replace(/_/g, "/")
-                  );
-                  // Append the decoded HTML directly to the body variable
-                  body.content += decodedData;
-                  // body.content = part.body.data;
+              const attachments = {};
+              const getMessageBody = (parts) => {
+                let htmlBody = "";
+                parts.forEach((part) => {
+                  if (part.mimeType === "text/html" && part.body.data) {
+                    htmlBody = Buffer.from(part.body.data, "base64").toString(
+                      "utf-8"
+                    );
+                  } else if (
+                    part.mimeType.startsWith("image/") &&
+                    part.body.attachmentId
+                  ) {
+                    attachments[part.body.attachmentId] = part;
+                  } else if (
+                    part.mimeType === "multipart/alternative" &&
+                    part.parts
+                  ) {
+                    getMessageBody(part.parts); // Recursive call for nested parts
+                  }
+                });
+                // If HTML body is available, use it
+                if (htmlBody !== "") {
+                  body.content += htmlBody;
                 }
-              });
+              };
 
-              console.log("body", body);
+              getMessageBody(parts);
+
+              // Retrieve attachments data
+              for (const attachmentId in attachments) {
+                const attachment = attachments[attachmentId];
+                const attachmentData = await axios.get(
+                  `https://gmail.googleapis.com/gmail/v1/users/me/messages/${message.id}/attachments/${attachmentId}?access_token=${session.accessToken}`
+                );
+                const decodedData = Buffer.from(
+                  attachmentData.data.data,
+                  "base64"
+                ).toString("base64");
+                body.content = body.content.replace(
+                  `cid:${attachmentId}`,
+                  `data:${attachment.mimeType};base64,${decodedData}`
+                );
+              }
               const isRead = labelIds.includes("UNREAD") ? false : true;
               const fromHeader =
                 headers.find((header) => header.name === "From")?.value || "";
@@ -89,18 +119,16 @@ const Emails = () => {
           );
           dispatch(setGoogleEmails(messagesData));
           setMessages(messagesData);
-        } catch (error) {
-        }
+        } catch (error) {}
       };
 
       fetchMessages();
     }
   }, [session]);
-  console.log("messages", messages);
 
   const router = useRouter();
   const emails = useSelector(selectAllEmails);
-  console.log("emails", emails);
+
   return (
     <>
       <Box sx={styles.mainBox}>

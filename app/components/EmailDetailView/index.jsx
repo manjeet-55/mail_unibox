@@ -6,7 +6,6 @@ import moment from "moment";
 import SendEmailModal from "../SendEmail";
 import { useRouter } from "next/navigation";
 const EmailDetailView = ({ email }) => {
-  console.log("email detail view", email);
   const [openReplyModal, setOpenReplyModal] = useState(false);
   const [replyModalData, setReplyModalData] = useState({});
 
@@ -22,7 +21,7 @@ const EmailDetailView = ({ email }) => {
     };
     setReplyModalData(emailInfo);
   };
-  console.log("email", email);
+
   return (
     <Box component="main" sx={styles.mainContainer}>
       <Box sx={styles.container}>

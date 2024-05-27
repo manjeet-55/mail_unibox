@@ -17,8 +17,10 @@ const EmailsPage = () => {
     };
     const keyName = "access_token";
     const accessToken = getQueryParamValue(keyName, window.location.search);
-    const outlookEmail = getQueryParamValue("username", window.location.search)
-    if (accessToken) {
+    const outlookEmail = getQueryParamValue("username", window.location.search);
+    
+    if (accessToken && outlookEmail) {
+      localStorage.setItem("outlookemail", outlookEmail);
       localStorage.setItem(keyName, accessToken);
     }
     if (window.location.search) {
