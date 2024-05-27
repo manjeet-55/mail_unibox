@@ -3,7 +3,15 @@ import { Modal, Box, Button, Typography, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { SendEmailStyles } from "./index.styles"; // Import the styles
 import axios from "axios";
+import { toast } from "react-toastify";
 const SendEmailModal = ({ open, handleClose, emailInfo }) => {
+  const [outLookEmail, setOutlookEmail] = useState(
+    localStorage.getItem("outlookemail")
+  );
+  const [googleEmail, setGoogleEmail] = useState(localStorage.getItem("gmail"));
+
+  // console.log("outLookEmail", outLookEmail, "googleEmail", googleEmail);
+
   const dummyEmailData = {
     to: "",
     cc: "",
@@ -15,12 +23,21 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
   const [ccEnabled, setCcEnabled] = useState(false);
   const [bccEnabled, setBccEnabled] = useState(false);
 
+  const [fromEmail, setFromEmail] = useState(outLookEmail);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEmailData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleSendEmail = () => {
+    if (fromEmail == outLookEmail) {
+      handleOutlookEmailSend();
+    } else {
+      handleGoogleEmailSend();
+    }
   };
   const handleOutlookEmailSend = async () => {
     const dataToBeSent = {
@@ -71,12 +88,14 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
         },
       });
       // console.log("Email sent successfully:", response.data);
+      toast.success("Email Sent Successfully");
       // handleClose();
     } catch (error) {
       console.error("Error sending email:", error);
     }
   };
 
+  // console.log("fromEmail", fromEmail);
   const {
     modal,
     box,
@@ -107,6 +126,22 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
           </IconButton>
         </Box>
         <Box sx={formContainer}>
+          <label style={inputLabel}>
+            <span style={{ width: "2.5rem", marginRight: "0.5rem" }}>From</span>
+            <input
+              type="text"
+              name="from"
+              list="emailSuggestions"
+              value={fromEmail}
+              onChange={(e) => setFromEmail(e.target.value)}
+              style={input}
+            />
+            <datalist id="emailSuggestions">
+              {[outLookEmail, googleEmail].map((email, index) => (
+                <option key={index} value={email} />
+              ))}
+            </datalist>
+          </label>
           <label style={inputLabel}>
             <span style={{ width: "2.5rem" }}>To</span>
             <input
@@ -178,11 +213,7 @@ const SendEmailModal = ({ open, handleClose, emailInfo }) => {
           <Button onClick={handleClose} sx={{ mr: 2 }}>
             Cancel
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleOutlookEmailSend}
-          >
+          <Button variant="contained" color="primary" onClick={handleSendEmail}>
             Send
           </Button>
         </Box>

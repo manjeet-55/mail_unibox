@@ -12,44 +12,46 @@ export default function Home() {
   };
 
   return (
-    <Grid container component="main" sx={styles.mainGrid}>
-      <Grid item xs={12} sx={styles.fullScreen}>
-        <Box sx={styles.boxContainer}>
-          <Typography component="h1" variant="h3" sx={styles.heading}>
-            Mail Unibox
-          </Typography>
-          <Box sx={styles.buttonContainer}>
-            <Button
-              onClick={handleSignIn("google")}
-              variant="contained"
-              sx={styles.signInButton}
-              startIcon={
-                <Image src={google} alt="Google" width={19} height={19} />
-              }
-            >
-              Sign in with Google
-            </Button>
-            <Divider sx={styles.divider}>or</Divider>
-            <Button
-              onClick={() => router.push("http://localhost:3000/login")}
-              variant="contained"
-              color="secondary"
-              sx={styles.signInButton}
-              startIcon={
-                <Image
-                  src={MicrosoftLogo}
-                  alt="Microsoft"
-                  width={19}
-                  height={19}
-                />
-              }
-            >
-              Sign in with Microsoft
-            </Button>
+    <>
+      <Grid container component="main" sx={styles.mainGrid}>
+        <Grid item xs={12} sx={styles.fullScreen}>
+          <Box sx={styles.boxContainer}>
+            <Typography component="h1" variant="h3" sx={styles.heading}>
+              Mail Unibox
+            </Typography>
+            <Box sx={styles.buttonContainer}>
+              <Button
+                onClick={handleSignIn("google")}
+                variant="contained"
+                sx={styles.signInButton}
+                startIcon={
+                  <Image src={google} alt="Google" width={19} height={19} />
+                }
+              >
+                Sign in with Google
+              </Button>
+              <Divider sx={styles.divider}>or</Divider>
+              <Button
+                onClick={() => router.push("http://localhost:3000/login")}
+                variant="contained"
+                color="secondary"
+                sx={styles.signInButton}
+                startIcon={
+                  <Image
+                    src={MicrosoftLogo}
+                    alt="Microsoft"
+                    width={19}
+                    height={19}
+                  />
+                }
+              >
+                Sign in with Microsoft
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }
 const styles = {
@@ -67,7 +69,7 @@ const styles = {
     alignItems: "center",
   },
   boxContainer: {
-    background:'#fcfcfc',
+    background: "#fcfcfc",
     textAlign: "center",
     padding: "2rem",
     borderRadius: "8px",

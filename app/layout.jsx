@@ -5,6 +5,9 @@ import Main from "./Main";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,13 +16,13 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Main session={session} children={children}>
-            </Main>
+          <ToastContainer />
+          <Main session={session} children={children}></Main>
         </Providers>
       </body>
     </html>

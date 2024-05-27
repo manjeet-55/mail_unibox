@@ -59,7 +59,7 @@ const EmailDetailView = ({ email }) => {
                   "MMM D, yyyy, h:mm A"
                 )}
               </Typography>
-              <IconButton>
+              <IconButton onClick={handleReply}>
                 <Reply />
               </IconButton>
             </Box>
