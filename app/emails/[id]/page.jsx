@@ -10,6 +10,7 @@ const EmailDetail = () => {
   const encodedId = params?.id;
   const id = decodeURIComponent(encodedId);
   let email = useSelector((state) => selectEmailById(state, id));
+  
 
   return <EmailDetailView email={email} />;
 };

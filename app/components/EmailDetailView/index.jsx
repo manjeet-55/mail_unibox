@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Box, Typography, Button, IconButton, Avatar } from "@mui/material";
-import { Forward, Delete, Reply } from "@mui/icons-material";
+import { Forward, Delete, Reply, ArrowBack } from "@mui/icons-material";
 import { EmailDetailViewStyles as styles } from "./index.styles";
 import moment from "moment";
 import SendEmailModal from "../SendEmail";
+import { useRouter } from "next/navigation";
 const EmailDetailView = ({ email }) => {
   const [openReplyModal, setOpenReplyModal] = useState(false);
   const [replyModalData, setReplyModalData] = useState({});
 
+  const router = useRouter();
   const handleReply = () => {
     setOpenReplyModal(true);
     const emailInfo = {
@@ -16,11 +18,18 @@ const EmailDetailView = ({ email }) => {
     };
     setReplyModalData(emailInfo);
   };
+  // console.log("email", email);
   return (
     <Box component="main" sx={styles.mainContainer}>
       <Box sx={styles.container}>
         <Box sx={styles.header}>
-          <Typography sx={styles.subject}>{email.subject}</Typography>
+          <Box sx={{ display: "flex" }}>
+            <ArrowBack
+              onClick={() => router.push("/emails")}
+              sx={{ cursor: "pointer" , color:'#444746'}}
+            />
+            <Typography sx={styles.subject}>{email.subject}</Typography>
+          </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box sx={styles.senderInfo}>
               <Avatar
@@ -51,7 +60,12 @@ const EmailDetailView = ({ email }) => {
             </Box>
           </Box>
         </Box>
-        <Typography sx={styles.body}>{email.body.content}</Typography>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: email.body.content,
+          }}
+        />
+        {/* <Typography sx={styles.body}>{email.body.content}</Typography> */}
         <Box sx={styles.actions}>
           <Box>
             <Button

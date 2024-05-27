@@ -1,26 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  emails: [],
+  googleEmails: [],
+  outlookEmails: [],
 };
 
 const emailsDataSlice = createSlice({
   name: "emailsData",
   initialState,
   reducers: {
-    setEmails(state, action) {
-      state.emails = action.payload;
+    setGoogleEmails(state, action) {
+      state.googleEmails = action.payload;
+    },
+    setOutlookEmails(state, action) {
+      state.outlookEmails = action.payload;
     },
   },
 });
 
-export const selectAllEmails = (state) => state.emailsData.emails;
+export const selectAllEmails = (state) => [
+  ...state.emailsData.googleEmails,
+  ...state.emailsData.outlookEmails,
+];
+export const selectGoogleEmails = (state) => state.emailsData.googleEmails;
+export const selectOutlookEmails = (state) => state.emailsData.outlookEmails;
 export const selectEmailById = (state, emailId) => {
-  // console.log("state", state);
-  // console.log("emailId", emailId);
-  return state.emailsData.emails.value.find((email) => email.id == emailId);
+  console.log("state", state);
+  return state.emailsData.outlookEmails.find((email) => email.id == emailId);
 };
 
-export const { setEmails } = emailsDataSlice.actions;
+export const { setGoogleEmails, setOutlookEmails } = emailsDataSlice.actions;
 
 export default emailsDataSlice.reducer;

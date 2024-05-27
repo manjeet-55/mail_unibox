@@ -30,7 +30,7 @@ export const EmailDetailViewStyles = {
     fontSize: "1.2rem",
     fontWeight: 600,
     marginBottom: "1rem",
-    marginLeft:'2.4rem'
+    marginLeft:'1rem'
   },
   body: {
     lineHeight: 1.6,

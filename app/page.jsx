@@ -1,11 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
-  useEffect(() => {
-    router.push("http://localhost:3000/login");
-  }, []);
+
   return (
     <>
       <div className="h-screen w-full flex flex-col justify-center items-center bg-gray-100">
