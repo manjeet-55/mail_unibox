@@ -2,7 +2,6 @@ export const EmailListViewStyles = {
   mainBox: {
     flexGrow: 1,
     bgcolor: "background.default",
-    padding: "0.5rem",
   },
   paper: {
     background: "#f8f8f8",

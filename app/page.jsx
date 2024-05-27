@@ -1,7 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
+  useEffect(() => {
+    router.push("http://localhost:3000/login");
+  }, []);
   return (
     <>
       <div className="h-screen w-full flex flex-col justify-center items-center bg-gray-100">
@@ -14,7 +18,7 @@ export default function Home() {
             Gmail
           </button>
           <button
-            onClick={() => router.push("/outlook")}
+            onClick={() => router.push("http://localhost:3000/login")}
             className="px-6 py-3 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition duration-300"
           >
             Outlook

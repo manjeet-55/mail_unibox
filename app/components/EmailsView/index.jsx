@@ -16,9 +16,9 @@ const Emails = () => {
   const emails = useSelector(selectAllEmails);
   return (
     <>
-      <Box component="main" sx={styles.mainBox}>
+      <Box sx={styles.mainBox}>
         <Paper elevation={1} sx={styles.paper}>
-          {emails?.value?.map((email, index) => (
+          {emails?.map((email, index) => (
             <Box
               key={index}
               sx={styles.emailBox(email.isRead)}
@@ -38,7 +38,7 @@ const Emails = () => {
                     <span style={styles.emailBody}>{email.bodyPreview}</span>
                   </Typography>
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={1} justifyContent="center">
                   <Typography variant="body2" sx={styles.emailDate}>
                     {moment(email.lastModifiedDateTime).format("MMMM D")}
                   </Typography>
