@@ -6,6 +6,7 @@ import moment from "moment";
 import SendEmailModal from "../SendEmail";
 import { useRouter } from "next/navigation";
 const EmailDetailView = ({ email }) => {
+  console.log("email detail view", email);
   const [openReplyModal, setOpenReplyModal] = useState(false);
   const [replyModalData, setReplyModalData] = useState({});
 

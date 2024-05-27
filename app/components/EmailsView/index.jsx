@@ -8,12 +8,102 @@ import MicrosoftImage from "../../../assets/Outlook_Logo.svg";
 import moment from "moment";
 import { EmailListViewStyles as styles } from "./index.styles";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { selectAllEmails } from "../../store/Features/emailsDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectAllEmails,
+  setGoogleEmails,
+} from "../../store/Features/emailsDataSlice";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSession, signIn, signOut } from "next-auth/react";
+
+import { htmlToText } from "html-to-text";
 const Emails = () => {
+  const dispatch = useDispatch();
+  const { data: session } = useSession();
+  const [messages, setMessages] = useState([]);
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (session && session.accessToken) {
+      const fetchMessages = async () => {
+        let config = {
+          method: "get",
+          maxBodyLength: Infinity,
+          url: `https://gmail.googleapis.com/gmail/v1/users/me/messages?access_token=${session.accessToken}`,
+          headers: {},
+        };
+
+        try {
+          const response = await axios.request(config);
+          const messagesData = await Promise.all(
+            response.data.messages.map(async (message) => {
+              const messageDetails = await axios.get(
+                `https://gmail.googleapis.com/gmail/v1/users/me/messages/${message.id}?access_token=${session.accessToken}`
+              );
+              const headers = messageDetails.data.payload.headers;
+              const labelIds = messageDetails.data.labelIds;
+              const parts = messageDetails.data.payload.parts || [];
+              let body = {
+                content: "",
+              };
+              parts.forEach((part) => {
+                if (part.body.data) {
+                  // Decode the Base64 encoded data (handling URL-safe characters)
+                  const decodedData = atob(
+                    part.body.data.replace(/-/g, "+").replace(/_/g, "/")
+                  );
+                  // Append the decoded HTML directly to the body variable
+                  body.content += decodedData;
+                  // body.content = part.body.data;
+                }
+              });
+
+              console.log("body", body);
+              const isRead = labelIds.includes("UNREAD") ? false : true;
+              const fromHeader =
+                headers.find((header) => header.name === "From")?.value || "";
+              const senderRegex = /(.*) <(.*)>/;
+              const senderMatch = fromHeader.match(senderRegex);
+              const sender = {
+                emailAddress: {
+                  name: senderMatch ? senderMatch[1] : "",
+                  address: senderMatch ? senderMatch[2] : "",
+                },
+              };
+              const details = {
+                id: messageDetails.data.id,
+                bodyPreview: messageDetails.data.snippet,
+                lastModifiedDateTime:
+                  headers.find((header) => header.name === "Date")?.value || "",
+                subject:
+                  headers.find((header) => header.name === "Subject")?.value ||
+                  "",
+                to: headers.find((header) => header.name === "To")?.value || "",
+                body: body,
+                sender,
+                isRead,
+              };
+              return details;
+            })
+          );
+          dispatch(setGoogleEmails(messagesData));
+          setMessages(messagesData);
+        } catch (error) {
+          setError(error);
+        }
+      };
+
+      fetchMessages();
+    }
+  }, [session]);
+  console.log("messages", messages);
+
   const router = useRouter();
   const emails = useSelector(selectAllEmails);
+  console.log("emails", emails);
   return (
     <>
       <Box sx={styles.mainBox}>
@@ -44,7 +134,7 @@ const Emails = () => {
                   </Typography>
                 </Grid>
                 <Grid item xs={1} sx={styles.emailFlag}>
-                  {email.flag ? (
+                  {email.hasOwnProperty("flag") ? (
                     <Image
                       src={MicrosoftImage}
                       width={20}

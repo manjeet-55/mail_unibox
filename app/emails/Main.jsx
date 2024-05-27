@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setEmails } from "../store/Features/emailsDataSlice";
 // import { sampleEmail } from "../components/EmailsView/sampleData";
 import axios from "axios";
 const Main = ({ children }) => {

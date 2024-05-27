@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
@@ -9,7 +10,7 @@ export default function Home() {
         <h1 className="text-4xl font-bold mb-8 text-gray-800">Mail Unibox</h1>
         <div className="flex space-x-4">
           <button
-            onClick={() => router.push("/gmail")}
+            onClick={() => signIn('google')}
             className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
           >
             Gmail

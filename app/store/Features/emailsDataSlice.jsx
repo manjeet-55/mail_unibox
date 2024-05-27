@@ -26,7 +26,8 @@ export const selectGoogleEmails = (state) => state.emailsData.googleEmails;
 export const selectOutlookEmails = (state) => state.emailsData.outlookEmails;
 export const selectEmailById = (state, emailId) => {
   console.log("state", state);
-  return state.emailsData.outlookEmails.find((email) => email.id == emailId);
+  const allEmails = [...state.emailsData.googleEmails, ...state.emailsData.outlookEmails];
+  return allEmails.find((email) => email.id === emailId);
 };
 
 export const { setGoogleEmails, setOutlookEmails } = emailsDataSlice.actions;
