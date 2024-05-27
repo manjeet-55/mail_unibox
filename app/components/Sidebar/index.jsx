@@ -17,8 +17,8 @@ import {
   Delete,
   ModeEditOutline,
 } from "@mui/icons-material";
-import GoogleImage from "../../../assets/google.png";
-import MicrosoftImage from "../../../assets/microsoft.svg";
+import GoogleImage from "../../../assets/Gmail_Logo.svg";
+import MicrosoftImage from "../../../assets/Outlook_Logo.svg";
 import Image from "next/image";
 import SendEmailModal from "../SendEmail";
 import { SideBarStyles } from "./index.styles";
@@ -66,7 +66,7 @@ const Sidebar = () => {
               width={20}
               alt="google image"
             />
-            <Typography sx={addButtonText}>Add Google</Typography>
+            <Typography sx={addButtonText}>Add Gmail</Typography>
           </Button>
         </Box>
         <Box sx={{ padding: "1rem 0 1rem 0.5rem" }}>
@@ -80,7 +80,7 @@ const Sidebar = () => {
               width={20}
               alt="microsoft image"
             />
-            <Typography sx={addButtonText}>Add Microsoft</Typography>
+            <Typography sx={addButtonText}>Add Outlook</Typography>
           </Button>
         </Box>
         <Divider />
