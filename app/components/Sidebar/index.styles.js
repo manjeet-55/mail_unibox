@@ -12,7 +12,7 @@ export const SideBarStyles = {
       borderRadius: '1rem',
       display: 'flex',
       columnGap: '0.5rem',
-      width: '11rem',
+      width: '11.5rem',
       transition: '0.3s ease-in-out',
       alignItems: 'center',
       '&:hover': {
@@ -22,6 +22,7 @@ export const SideBarStyles = {
     },
     addButtonText: {
       color: '#001d35',
+      fontSize:'0.9rem'
     },
     composeButton: {
       background: '#c2e7fe',

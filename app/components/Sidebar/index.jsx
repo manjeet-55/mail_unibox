@@ -55,7 +55,7 @@ const Sidebar = () => {
         variant="permanent"
         anchor="left"
       >
-        <Box sx={{ padding: "1rem 0 1rem 0.5rem" }}>
+        <Box sx={{ padding: "1rem 0 0 0.5rem" }}>
           <Button sx={addButton}>
             <Image
               src={GoogleImage}

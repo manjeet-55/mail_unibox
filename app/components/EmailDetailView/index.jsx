@@ -14,11 +14,14 @@ const EmailDetailView = ({ email }) => {
     setOpenReplyModal(true);
     const emailInfo = {
       to: email.from.emailAddress.address,
-      cc: email.ccRecipients[0].emailAddress.address,
+      cc:
+        email.ccRecipients.length > 1
+          ? email.ccRecipients[0].emailAddress.address
+          : "",
     };
     setReplyModalData(emailInfo);
   };
-  // console.log("email", email);
+  console.log("email", email);
   return (
     <Box component="main" sx={styles.mainContainer}>
       <Box sx={styles.container}>
@@ -26,7 +29,7 @@ const EmailDetailView = ({ email }) => {
           <Box sx={{ display: "flex" }}>
             <ArrowBack
               onClick={() => router.push("/emails")}
-              sx={{ cursor: "pointer" , color:'#444746'}}
+              sx={{ cursor: "pointer", color: "#444746" }}
             />
             <Typography sx={styles.subject}>{email.subject}</Typography>
           </Box>
@@ -52,7 +55,9 @@ const EmailDetailView = ({ email }) => {
               sx={{ display: "flex", columnGap: "1rem", alignItems: "center" }}
             >
               <Typography sx={styles.senderEmail}>
-                {moment(email.sentDateTime).format("MMM d, yyyy, h:mm A")}
+                {moment(email.lastModifiedDateTime).format(
+                  "MMM D, yyyy, h:mm A"
+                )}
               </Typography>
               <IconButton>
                 <Reply />
