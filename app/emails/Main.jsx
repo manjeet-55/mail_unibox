@@ -1,13 +1,44 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setEmails } from "../store/Features/emailsDataSlice";
-import { sampleEmail } from "../components/EmailsView/sampleData";
+// import { sampleEmail } from "../components/EmailsView/sampleData";
+import axios from "axios";
 const Main = ({ children }) => {
-  const dispatch = useDispatch();
+  // const [emails, setEmails] = useState(null);
+
   useEffect(() => {
-    dispatch(setEmails(sampleEmail));
-  }, [dispatch]);
+    const getQueryParamValue = (key, url) => {
+      const queryString = url.split("?")[1];
+      if (!queryString) return null;
+
+      const params = new URLSearchParams(queryString);
+      return params.get(key);
+    };
+    const keyName = "access_token";
+    const paramValue = getQueryParamValue(keyName, window.location.search);
+    if (paramValue) {
+      localStorage.setItem(keyName, paramValue);
+    }
+    const storedKey = localStorage.getItem(keyName);
+    if (storedKey) {
+      axios
+        .get(`http://localhost:3000/inbox?access_token=${storedKey}`)
+        .then((response) => {
+          dispatch(setEmails(response.data));
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+    if (window.location.search) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(setEmails(sampleEmail));
+  // }, [dispatch]);
   return <>{children}</>;
 };
 
