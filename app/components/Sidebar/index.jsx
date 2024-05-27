@@ -18,6 +18,7 @@ import {
   ModeEditOutline,
 } from "@mui/icons-material";
 import GoogleImage from "../../../assets/google.png";
+import MicrosoftImage from "../../../assets/microsoft.svg";
 import Image from "next/image";
 import SendEmailModal from "../SendEmail";
 import { SideBarStyles } from "./index.styles";
@@ -56,11 +57,22 @@ const Sidebar = () => {
           <Button sx={addButton}>
             <Image
               src={GoogleImage}
-              height={22}
-              width={22}
+              height={20}
+              width={20}
               alt="google image"
             />
             <Typography sx={addButtonText}>Add Google</Typography>
+          </Button>
+        </Box>
+        <Box sx={{ padding: "1rem 0 1rem 0.5rem" }}>
+          <Button sx={addButton}>
+            <Image
+              src={MicrosoftImage}
+              height={20}
+              width={20}
+              alt="microsoft image"
+            />
+            <Typography sx={addButtonText}>Add Microsoft</Typography>
           </Button>
         </Box>
         <Divider />
@@ -88,7 +100,8 @@ const Sidebar = () => {
         <SendEmailModal
           open={showNewEmailModal}
           handleClose={() => setShowNewEmailModal(false)}
-  x      />
+          x
+        />
       )}
     </>
   );

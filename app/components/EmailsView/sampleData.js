@@ -32,7 +32,8 @@ export const sampleEmail = {
       inferenceClassification: "focused",
       body: {
         contentType: "text",
-        content: "Sample Email Testing",
+        content:
+          "Sample Email Testing,Sample Email Testing,Sample Email Testing,Sample Email Testing",
       },
       sender: {
         emailAddress: {

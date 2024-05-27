@@ -3,8 +3,8 @@
 import React from "react";
 import Image from "next/image";
 import { Box, Paper, Typography, Grid } from "@mui/material";
-import GoogleImage from "../../../assets/google.png";
-import MicrosoftImage from "../../../assets/microsoft.svg";
+import GoogleImage from "../../../assets/Gmail_Logo.svg";
+import MicrosoftImage from "../../../assets/Outlook_Logo.svg";
 import moment from "moment";
 import { EmailListViewStyles as styles } from "./index.styles";
 import { useRouter } from "next/navigation";
