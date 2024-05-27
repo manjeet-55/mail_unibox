@@ -22,8 +22,11 @@ import MicrosoftImage from "../../../assets/microsoft.svg";
 import Image from "next/image";
 import SendEmailModal from "../SendEmail";
 import { SideBarStyles } from "./index.styles";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Sidebar = () => {
+  const router = useRouter();
   const [showNewEmailModal, setShowNewEmailModal] = useState(false);
   const navItems = [
     { text: "Inbox", icon: <Inbox /> },
@@ -47,16 +50,16 @@ const Sidebar = () => {
     <>
       <Drawer
         sx={{
-          width:'200px',
+          width: "200px",
           // flexShrink: 0,
-          margin:'0',
+          margin: "0",
           "& .MuiDrawer-paper": drawerPaper,
         }}
         variant="permanent"
         anchor="left"
       >
         <Box sx={{ padding: "1rem 0 0 0.5rem" }}>
-          <Button sx={addButton}>
+          <Button sx={addButton} onClick={() => signIn("google")}>
             <Image
               src={GoogleImage}
               height={20}
@@ -67,7 +70,10 @@ const Sidebar = () => {
           </Button>
         </Box>
         <Box sx={{ padding: "1rem 0 1rem 0.5rem" }}>
-          <Button sx={addButton}>
+          <Button
+            sx={addButton}
+            onClick={() => router.push("http://localhost:3000/login")}
+          >
             <Image
               src={MicrosoftImage}
               height={20}
